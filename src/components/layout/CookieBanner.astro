@@ -1,0 +1,112 @@
+---
+
+---
+
+<div
+  id="cookie-banner"
+  class="fixed bottom-0 left-0 right-0 z-50 bg-[#13132A]/95 backdrop-blur-xl border-t border-white/10 p-4 sm:p-6 transform translate-y-full transition-transform duration-300"
+  role="dialog"
+  aria-label="Configuración de cookies"
+  aria-live="polite"
+>
+  <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-4">
+    <div class="text-sm text-[#E8E8F0]/80 max-w-2xl">
+      <p>
+        Utilizamos cookies propias y de terceros para mejorar tu experiencia, analizar el tráfico y personalizar contenido.
+        Puedes aceptar todas, solo las necesarias o configurar tus preferencias.
+      </p>
+    </div>
+    <div class="flex flex-wrap items-center gap-3 shrink-0">
+      <button
+        id="cookie-necessary"
+        class="px-4 py-2 rounded-lg text-sm font-medium border border-white/10 text-[#E8E8F0] hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#43CBFF]"
+      >
+        Solo necesarias
+      </button>
+      <button
+        id="cookie-configure"
+        class="px-4 py-2 rounded-lg text-sm font-medium border border-white/10 text-[#E8E8F0] hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#43CBFF]"
+      >
+        Configurar
+      </button>
+      <button
+        id="cookie-accept-all"
+        class="px-4 py-2 rounded-lg text-sm font-semibold bg-[#43CBFF] text-[#0D0D1A] hover:bg-[#43CBFF]/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#43CBFF] focus-visible:ring-offset-[#13132A]"
+      >
+        Aceptar todo
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const STORAGE_KEY = 'localwebs_cookie_consent';
+    const EXPIRATION_MONTHS = 6;
+
+    function getConsent() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+        const data = JSON.parse(raw);
+        if (data.expires && Date.now() > data.expires) {
+          localStorage.removeItem(STORAGE_KEY);
+          return null;
+        }
+        return data.value || null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function setConsent(value) {
+      const expires = Date.now() + EXPIRATION_MONTHS * 30 * 24 * 60 * 60 * 1000;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ value, expires }));
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) {
+        banner.classList.add('translate-y-full');
+        banner.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) {
+        banner.classList.remove('translate-y-full');
+        banner.setAttribute('aria-hidden', 'false');
+      }
+    }
+
+    function loadAnalytics() {
+      // Insertar aquí el código de analytics real tras obtener consentimiento
+      // Ejemplo: window.gtag('consent', 'update', { analytics_storage: 'granted' });
+      console.log('[SwiftSides] Analytics cargado con consentimiento');
+    }
+
+    const consent = getConsent();
+
+    if (consent === 'all') {
+      loadAnalytics();
+    } else if (!consent) {
+      setTimeout(showBanner, 500);
+    }
+
+    document.getElementById('cookie-accept-all')?.addEventListener('click', function() {
+      setConsent('all');
+      loadAnalytics();
+      hideBanner();
+    });
+
+    document.getElementById('cookie-necessary')?.addEventListener('click', function() {
+      setConsent('necessary');
+      hideBanner();
+    });
+
+    document.getElementById('cookie-configure')?.addEventListener('click', function() {
+      alert('Próximamente: panel de configuración de cookies detallado.');
+    });
+  })();
+</script>

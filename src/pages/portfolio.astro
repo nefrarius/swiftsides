@@ -1,0 +1,281 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Navbar from '@components/layout/Navbar.astro';
+import Footer from '@components/layout/Footer.astro';
+import CookieBanner from '@components/layout/CookieBanner.astro';
+import WhatsAppButton from '@components/layout/WhatsAppButton.astro';
+import ScrollToTop from '@components/layout/ScrollToTop.astro';
+import { portfolioItems } from '@data/portfolio';
+
+const categories = [
+  { id: 'todos', label: 'Todos' },
+  { id: 'restaurantes', label: 'Restaurantes' },
+  { id: 'belleza', label: 'Belleza' },
+  { id: 'tecnologia', label: 'Tecnología' },
+  { id: 'salud', label: 'Salud' },
+  { id: 'retail', label: 'Retail' },
+];
+
+const categoryColors: Record<string, string> = {
+  restaurantes: 'bg-orange-500/20 text-orange-400',
+  belleza: 'bg-pink-500/20 text-pink-400',
+  tecnologia: 'bg-blue-500/20 text-blue-400',
+  salud: 'bg-green-500/20 text-green-400',
+  retail: 'bg-purple-500/20 text-purple-400',
+  servicios: 'bg-yellow-500/20 text-yellow-400',
+};
+---
+
+<BaseLayout 
+  title="Portfolio | SwiftSides"
+  description="Descubre algunos de los proyectos web que hemos creado para negocios locales. Webs para restaurantes, tiendas, clínicas y más."
+>
+  <Navbar slot="navbar" />
+  
+  <section class="py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Nuestros Proyectos</h1>
+        <p class="text-lg text-text/70 max-w-2xl mx-auto">
+          Somos dos chicos emprendiendo que, además de reforzar nuestros conocimientos, queremos ayudar a negocios locales a tener una web moderna y sencilla a un buen precio.
+        </p>
+      </div>
+
+      <!-- Filters -->
+      <div class="flex flex-wrap justify-center gap-3 mb-12" role="tablist" aria-label="Filtrar proyectos por categoría">
+        {categories.map((cat) => (
+          <button
+            class="filter-btn px-5 py-2.5 rounded-xl text-sm font-medium transition border border-white/10 bg-card/80 text-text/70 hover:border-primary/50 hover:text-white"
+            data-category={cat.id}
+            role="tab"
+            aria-selected={cat.id === 'todos'}
+            aria-controls="portfolio-grid"
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      <!-- Grid -->
+      <div id="portfolio-grid" class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+        {portfolioItems.map((item) => (
+          <article 
+            class="portfolio-item bg-card/80 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden group hover:border-primary/30 transition-all duration-300 break-inside-avoid"
+            data-category={item.category}
+          >
+            <!-- Image Placeholder -->
+            <div class="aspect-[4/3] bg-gradient-to-br from-primary/20 to-secondary/20 relative overflow-hidden">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-2xl font-bold text-white/30">{item.title}</span>
+              </div>
+              <div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="text-white font-medium">Ver caso</span>
+              </div>
+            </div>
+            
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span class={`text-xs font-medium px-2.5 py-1 rounded-lg ${categoryColors[item.category] || 'bg-primary/20 text-primary'}`}>
+                  {item.sector}
+                </span>
+              </div>
+              <h3 class="text-xl font-semibold text-white mb-2">{item.title}</h3>
+              <p class="text-text/60 text-sm mb-4 line-clamp-2">{item.description}</p>
+              
+              <div class="flex flex-wrap gap-2 mb-4">
+                {item.technologies.map((tech) => (
+                  <span class="text-xs text-text/50 bg-white/5 px-2 py-1 rounded-md">{tech}</span>
+                ))}
+              </div>
+              
+              <button 
+                class="view-case-btn w-full bg-primary/10 text-primary border border-primary/20 py-2.5 rounded-xl text-sm font-medium hover:bg-primary hover:text-white transition"
+                data-id={item.id}
+              >
+                Ver caso
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div 
+    id="portfolio-modal" 
+    class="fixed inset-0 z-50 hidden"
+    role="dialog" 
+    aria-modal="true"
+    aria-labelledby="modal-title"
+  >
+    <div class="absolute inset-0 bg-dark/80 backdrop-blur-sm modal-backdrop"></div>
+    <div class="relative min-h-screen flex items-center justify-center p-4">
+      <div class="bg-card/95 backdrop-blur-xl border border-white/10 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+        <div class="p-8">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <span id="modal-sector" class="text-xs font-medium px-2.5 py-1 rounded-lg bg-primary/20 text-primary mb-2 inline-block"></span>
+              <h2 id="modal-title" class="text-2xl md:text-3xl font-bold text-white"></h2>
+            </div>
+            <button 
+              id="modal-close" 
+              class="text-text/50 hover:text-white transition p-2"
+              aria-label="Cerrar modal"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          
+          <!-- Large Mockup Placeholder -->
+          <div class="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl mb-8 flex items-center justify-center">
+            <span id="modal-mockup-text" class="text-3xl font-bold text-white/30"></span>
+          </div>
+          
+          <div class="space-y-6">
+            <div>
+              <h3 class="text-lg font-semibold text-white mb-2">Descripción</h3>
+              <p id="modal-description" class="text-text/70"></p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 class="text-lg font-semibold text-white mb-2">El reto</h3>
+                <p id="modal-challenge" class="text-text/70 text-sm"></p>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-white mb-2">La solución</h3>
+                <p id="modal-solution" class="text-text/70 text-sm"></p>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="text-lg font-semibold text-white mb-3">Resultados</h3>
+              <div id="modal-results" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
+            </div>
+            
+            <div>
+              <h3 class="text-lg font-semibold text-white mb-3">Tecnologías</h3>
+              <div id="modal-technologies" class="flex flex-wrap gap-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <Footer slot="footer" />
+  <CookieBanner slot="scripts" />
+  <WhatsAppButton slot="scripts" />
+  <ScrollToTop slot="scripts" />
+</BaseLayout>
+
+<script>
+  // Filter functionality
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const items = document.querySelectorAll('.portfolio-item');
+  
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const category = btn.getAttribute('data-category');
+      
+      // Update active state
+      filterBtns.forEach(b => {
+        b.classList.remove('bg-primary', 'text-white', 'border-primary');
+        b.classList.add('bg-card/80', 'text-text/70', 'border-white/10');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.remove('bg-card/80', 'text-text/70', 'border-white/10');
+      btn.classList.add('bg-primary', 'text-white', 'border-primary');
+      btn.setAttribute('aria-selected', 'true');
+      
+      // Filter items
+      items.forEach(item => {
+        const itemCat = item.getAttribute('data-category');
+        if (category === 'todos' || itemCat === category) {
+          item.classList.remove('hidden');
+          setTimeout(() => {
+            item.classList.remove('opacity-0', 'scale-95');
+          }, 10);
+        } else {
+          item.classList.add('opacity-0', 'scale-95');
+          setTimeout(() => {
+            item.classList.add('hidden');
+          }, 300);
+        }
+      });
+    });
+  });
+
+  // Set initial active filter
+  const initialBtn = document.querySelector('[data-category="todos"]');
+  if (initialBtn) {
+    initialBtn.classList.remove('bg-card/80', 'text-text/70', 'border-white/10');
+    initialBtn.classList.add('bg-primary', 'text-white', 'border-primary');
+  }
+
+  // Portfolio data
+  const portfolioData = [
+    { id: 'la-cuchara-de-oro', title: 'La Cuchara de Oro', sector: 'Restaurantes', category: 'restaurantes', technologies: ['Astro', 'Tailwind', 'GSAP'], description: 'Web moderna para restaurante tradicional español con reservas online.', challenge: 'Necesitaban una web que reflejara la calidez de su restaurante y permitiera reservas sin comisiones.', solution: 'Diseñamos una experiencia visual rica con fotografía gastronómica prominente e integración de reservas directas.', results: ['+45% reservas online', '-30% comisiones de terceros', '3.2s tiempo de carga'], image: '/images/portfolio-1.jpg' },
+    { id: 'tech-zone', title: 'TechZone', sector: 'Tecnología', category: 'tecnologia', technologies: ['Astro', 'React', 'Stripe'], description: 'Tienda online de productos tecnológicos con catálogo de 40 productos.', challenge: 'Querían vender online sin depender de marketplaces que les cobraban altas comisiones.', solution: 'Ecommerce completo con pasarela de pago, gestión de stock y envíos automatizados.', results: ['+120% ventas online', '50 productos activos', '0% comisiones'], image: '/images/portfolio-2.jpg' },
+    { id: 'estetica-rosa', title: 'Estética Rosa', sector: 'Belleza', category: 'belleza', technologies: ['Astro', 'Tailwind', 'Calendly'], description: 'Centro de estética con reservas de citas y galería de tratamientos.', challenge: 'La mayoría de sus clientes reservaban por teléfono, saturando la línea durante horas pico.', solution: 'Sistema de citas online sincronizado con su calendario y recordatorios automáticos.', results: ['+60% citas online', '-40% llamadas perdidas', '+25% ocupación'], image: '/images/portfolio-3.jpg' },
+    { id: 'clinica-dental-sonrisa', title: 'Clínica Dental Sonrisa', sector: 'Salud', category: 'salud', technologies: ['Astro', 'Tailwind', 'GSAP'], description: 'Web corporativa para clínica dental con formulario de citas y blog.', challenge: 'Necesitaban transmitir confianza y profesionalidad online para atraer nuevos pacientes.', solution: 'Diseño limpio y confiable con testimonios de pacientes y contenido educativo sobre salud dental.', results: ['+80% consultas online', '+35% nuevos pacientes', 'Top 3 Google local'], image: '/images/portfolio-4.jpg' },
+    { id: 'gym-iron', title: 'Gym Iron', sector: 'Fitness', category: 'servicios', technologies: ['Astro', 'React', 'Tailwind'], description: 'Web para gimnasio local con horarios, entrenadores y membership online.', challenge: 'Competían contra grandes cadenas de gimnasios con presencia digital muy fuerte.', solution: 'Web dinámica con sección de entrenadores personales, calculadora de IMC y registro de membresías.', results: ['+50% nuevas altas', '-20% abandonos', '+200% tráfico web'], image: '/images/portfolio-5.jpg' },
+    { id: 'inmo-living', title: 'InmoLiving', sector: 'Inmobiliaria', category: 'servicios', technologies: ['Astro', 'Tailwind', 'Mapbox'], description: 'Portal inmobiliario local con mapa interactivo y filtros avanzados.', challenge: 'Sus propiedades no tenían visibilidad online fuera de los portales genéricos.', solution: 'Web propia con catálogo filtrable, mapa de ubicaciones y formulario de contacto por propiedad.', results: ['+90% visitas a propiedades', '+25% contactos directos', '2.8s LCP'], image: '/images/portfolio-6.jpg' },
+    { id: 'panaderia-maria', title: 'Panadería María', sector: 'Alimentación', category: 'restaurantes', technologies: ['Astro', 'Tailwind'], description: 'Web sencilla para panadería artesanal con catálogo de productos y pedidos.', challenge: 'Durante la pandemia necesitaban vender online para sobrevivir sin conocimientos técnicos.', solution: 'Web ultra-sencilla de gestionar con catálogo de productos diarios y pedidos por WhatsApp.', results: ['+200% pedidos semanales', 'Web gestionada por ellos mismos', 'Coste cero mantenimiento'], image: '/images/portfolio-7.jpg' },
+    { id: 'studio-tattoo', title: 'Studio Tattoo Ink', sector: 'Belleza', category: 'belleza', technologies: ['Astro', 'GSAP', 'Tailwind'], description: 'Portfolio visual para estudio de tatuajes con galería y reservas.', challenge: 'Necesitaban mostrar su portfolio de arte corporal de forma impactante y profesional.', solution: 'Galería inmersiva con lightbox, perfiles de artistas y sistema de citas con consulta previa.', results: ['+70% citas reservadas', 'Galería con 200+ fotos', 'Top 1 en su ciudad'], image: '/images/portfolio-8.jpg' },
+  ];
+
+  // Modal functionality
+  const modal = document.getElementById('portfolio-modal');
+  const modalBackdrop = modal?.querySelector('.modal-backdrop');
+  const closeBtn = document.getElementById('modal-close');
+  
+  function openModal(id: string) {
+    const item = portfolioData.find(p => p.id === id);
+    if (!item || !modal) return;
+    
+    document.getElementById('modal-title')!.textContent = item.title;
+    document.getElementById('modal-sector')!.textContent = item.sector;
+    document.getElementById('modal-mockup-text')!.textContent = item.title;
+    document.getElementById('modal-description')!.textContent = item.description;
+    document.getElementById('modal-challenge')!.textContent = item.challenge;
+    document.getElementById('modal-solution')!.textContent = item.solution;
+    
+    const resultsContainer = document.getElementById('modal-results')!;
+    resultsContainer.innerHTML = item.results.map(r => 
+      `<div class="bg-primary/10 border border-primary/20 rounded-xl p-4 text-center">
+        <span class="text-primary font-bold">${r}</span>
+       </div>`
+    ).join('');
+    
+    const techContainer = document.getElementById('modal-technologies')!;
+    techContainer.innerHTML = item.technologies.map(t => 
+      `<span class="text-sm text-text/70 bg-white/5 px-3 py-1.5 rounded-lg">${t}</span>`
+    ).join('');
+    
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeModal() {
+    modal?.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+  
+  document.querySelectorAll('.view-case-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-id');
+      if (id) openModal(id);
+    });
+  });
+  
+  closeBtn?.addEventListener('click', closeModal);
+  modalBackdrop?.addEventListener('click', closeModal);
+  
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>

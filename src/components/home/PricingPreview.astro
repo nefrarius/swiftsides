@@ -1,0 +1,63 @@
+---
+const plans = [
+  {
+    name: 'Básico',
+    price: '29',
+    description: 'Perfecto para empezar',
+    features: ['1 página', 'Diseño responsive', 'Formulario de contacto', 'Hosting 1 año'],
+  },
+  {
+    name: 'Profesional',
+    price: '49',
+    description: 'El más popular',
+    features: ['Hasta 5 páginas', 'Diseño personalizado', 'Blog básico', 'SEO local', 'Soporte por email'],
+    recommended: true,
+  },
+  {
+    name: 'Premium',
+    price: '89',
+    description: 'Para crecer sin límites',
+    features: ['Páginas ilimitadas', 'Diseño premium', 'Ecommerce básico', 'SEO avanzado', 'Soporte prioritario'],
+  },
+];
+---
+
+<section id="precios" class="py-24 bg-dark">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4">Planes y precios</h2>
+      <p class="text-text/70 max-w-xl mx-auto">Elige el plan que mejor se adapte a tu negocio. Hosting y dominio incluidos. Sin sorpresas.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8 items-center">
+      {plans.map((plan) => (
+        <div class={`relative rounded-2xl p-8 ${plan.recommended ? 'bg-white/10 backdrop-blur-xl border-2 border-primary shadow-[0_0_40px_rgba(108,99,255,0.15)]' : 'bg-white/5 backdrop-blur-xl border border-white/10'}`}>
+          {plan.recommended && (
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-white text-xs font-bold uppercase tracking-wider rounded-full">
+              Recomendado
+            </div>
+          )}
+          <h3 class="font-heading text-xl font-bold text-white mb-2">{plan.name}</h3>
+          <p class="text-sm text-text/60 mb-6">{plan.description}</p>
+          <div class="flex items-baseline gap-1 mb-8">
+            <span class="text-4xl font-heading font-bold text-white">€{plan.price}</span>
+            <span class="text-text/60">/mes</span>
+          </div>
+          <ul class="space-y-3 mb-8">
+            {plan.features.map(f => (
+              <li class="flex items-start gap-3 text-sm text-text/80">
+                <svg class="w-5 h-5 text-primary shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                {f}
+              </li>
+            ))}
+          </ul>
+          <a href="/pricing" class={`block w-full text-center py-3 rounded-xl font-medium transition-colors ${plan.recommended ? 'bg-primary text-white hover:bg-primary/90' : 'border border-white/20 text-white hover:bg-white/5'}`}>
+            Ver todos los detalles
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

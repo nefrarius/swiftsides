@@ -1,0 +1,147 @@
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark">
+  <canvas id="hero-canvas" class="absolute inset-0 w-full h-full opacity-60"></canvas>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+    <h1 class="font-heading text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+      <span class="bg-clip-text text-transparent bg-gradient-to-r from-white via-primary to-accent" id="typewriter-text"></span><span id="typewriter-cursor" class="inline-block w-1 h-12 md:h-16 bg-accent ml-1 animate-pulse shadow-[0_0_10px_rgba(67,203,255,0.8)]"></span>
+    </h1>
+    <p class="text-lg md:text-xl text-text/80 max-w-2xl mx-auto mb-10">
+      Diseñamos, desarrollamos y mantenemos páginas web para negocios locales. Hosting y dominio incluidos. Tu negocio online en 48-72h.
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+      <a href="/pricing" class="group relative px-8 py-4 bg-primary text-white font-semibold rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5 overflow-hidden">
+        <span class="relative z-10">Ver nuestros planes</span>
+        <div class="absolute inset-0 bg-gradient-to-r from-primary via-accent to-primary opacity-0 group-hover:opacity-30 transition-opacity"></div>
+      </a>
+      <a href="/portfolio" class="group px-8 py-4 border border-white/20 text-white font-semibold rounded-xl hover:bg-white/5 hover:border-white/30 transition-all hover:-translate-y-0.5 backdrop-blur-sm">
+        Ver trabajos
+      </a>
+    </div>
+
+    <div id="hero-mockup" class="relative mx-auto w-full max-w-3xl transition-transform duration-100 ease-out will-change-transform">
+      <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_60px_rgba(108,99,255,0.15)] hover:shadow-[0_0_80px_rgba(108,99,255,0.25)] transition-shadow duration-500">
+        <div class="flex items-center gap-2 px-4 py-3 border-b border-white/10 bg-white/5">
+          <div class="w-3 h-3 rounded-full bg-red-400"></div>
+          <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+          <div class="w-3 h-3 rounded-full bg-green-400"></div>
+          <div class="ml-4 flex-1 h-6 bg-white/10 rounded-md"></div>
+        </div>
+        <div class="p-6 md:p-10 grid gap-4">
+          <div class="h-4 bg-white/10 rounded w-3/4"></div>
+          <div class="h-4 bg-white/10 rounded w-1/2"></div>
+          <div class="grid grid-cols-3 gap-4 mt-4">
+            <div class="h-24 bg-white/5 rounded-xl"></div>
+            <div class="h-24 bg-white/5 rounded-xl"></div>
+            <div class="h-24 bg-white/5 rounded-xl"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
+    <span class="text-[10px] uppercase tracking-widest text-text/40">Scroll</span>
+    <div class="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-2">
+      <div class="w-1.5 h-1.5 bg-accent rounded-full animate-bounce shadow-[0_0_6px_rgba(67,203,255,0.8)]"></div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function() {
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function resize() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const PARTICLE_COUNT = isReducedMotion ? 30 : 60;
+    const CONNECTION_DIST = 120;
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * (isReducedMotion ? 0.2 : 0.5);
+        this.vy = (Math.random() - 0.5) * (isReducedMotion ? 0.2 : 0.5);
+        this.size = Math.random() * 2 + 1;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(108, 99, 255, 0.5)';
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+
+    function drawConnections() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < CONNECTION_DIST) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(67, 203, 255, ${0.2 * (1 - dist/CONNECTION_DIST)})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      drawConnections();
+      if (!isReducedMotion) requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Typewriter
+    const text = "Creamos la web que tu negocio merece";
+    const el = document.getElementById('typewriter-text');
+    const cursor = document.getElementById('typewriter-cursor');
+    let i = 0;
+    if (!isReducedMotion) {
+      const interval = setInterval(() => {
+        el.textContent += text.charAt(i);
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+          cursor.style.animation = 'none';
+          cursor.style.opacity = '0';
+        }
+      }, 60);
+    } else {
+      el.textContent = text;
+      cursor.style.display = 'none';
+    }
+
+    // Parallax mockup
+    const mockup = document.getElementById('hero-mockup');
+    if (!isReducedMotion) {
+      document.addEventListener('mousemove', (e) => {
+        const x = (window.innerWidth / 2 - e.clientX) / 40;
+        const y = (window.innerHeight / 2 - e.clientY) / 40;
+        mockup.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    }
+  })();
+</script>

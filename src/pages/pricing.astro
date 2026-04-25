@@ -1,0 +1,397 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Navbar from '@components/layout/Navbar.astro';
+import Footer from '@components/layout/Footer.astro';
+import CookieBanner from '@components/layout/CookieBanner.astro';
+import WhatsAppButton from '@components/layout/WhatsAppButton.astro';
+import ScrollToTop from '@components/layout/ScrollToTop.astro';
+import { pricingFaq } from '@data/faq';
+
+const plans = [
+  {
+    id: 'basico',
+    name: 'BÁSICO',
+    setup: 299,
+    monthly: 29,
+    description: 'Perfecto para negocios que empiezan',
+    features: [
+      'Web de 5 páginas',
+      'Diseño responsive',
+      'SEO básico',
+      'Formulario de contacto',
+      'Hosting 1 año incluido',
+      '1 revisión incluida',
+    ],
+    notIncluded: [
+      'Tienda online',
+      'Sistema de reservas',
+      'Google Ads',
+      'Soporte 24h',
+    ],
+    recommended: false,
+  },
+  {
+    id: 'profesional',
+    name: 'PROFESIONAL',
+    setup: 599,
+    monthly: 49,
+    description: 'El más elegido por nuestros clientes',
+    features: [
+      'Web de 10 páginas',
+      'Diseño responsive avanzado',
+      'SEO completo',
+      'Formulario de contacto + mapa',
+      'Hosting 1 año incluido',
+      '3 revisiones incluidas',
+      'Blog integrado',
+      'Integración redes sociales',
+    ],
+    notIncluded: [
+      'Tienda online',
+      'Sistema de reservas',
+      'Google Ads',
+      'Soporte 24h',
+    ],
+    recommended: true,
+  },
+  {
+    id: 'premium',
+    name: 'PREMIUM',
+    setup: 999,
+    monthly: 89,
+    description: 'Para negocios que quieren lo mejor',
+    features: [
+      'Todo lo del plan Profesional',
+      'Tienda online 50 productos',
+      'Pasarela de pagos integrada',
+      'Sistema de reservas/citas',
+      'Google Ads incluido',
+      'Soporte prioritario 24h',
+      'Mantenimiento mensual',
+      'Informes de rendimiento',
+    ],
+    notIncluded: [],
+    recommended: false,
+  },
+];
+
+const comparisonFeatures = [
+  { name: 'Páginas incluidas', basico: '5', profesional: '10', premium: 'Ilimitadas' },
+  { name: 'Diseño responsive', basico: true, profesional: true, premium: true },
+  { name: 'SEO básico', basico: true, profesional: true, premium: true },
+  { name: 'SEO avanzado', basico: false, profesional: true, premium: true },
+  { name: 'Blog integrado', basico: false, profesional: true, premium: true },
+  { name: 'Tienda online', basico: false, profesional: false, premium: '50 productos' },
+  { name: 'Sistema de reservas', basico: false, profesional: false, premium: true },
+  { name: 'Google Ads', basico: false, profesional: false, premium: true },
+  { name: 'Soporte 24h', basico: false, profesional: false, premium: true },
+  { name: 'Revisiones', basico: '1', profesional: '3', premium: 'Ilimitadas' },
+  { name: 'Hosting 1 año', basico: true, profesional: true, premium: true },
+];
+---
+
+<BaseLayout 
+  title="Precios | SwiftSides"
+  description="Planes de diseño web para negocios locales. Desde 299€ de setup o 29€/mes. Elige el plan que mejor se adapte a tu negocio."
+>
+  <Navbar slot="navbar" />
+  
+  <section class="py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Precios claros, sin sorpresas</h1>
+        <p class="text-lg text-text/70 max-w-2xl mx-auto">
+          Elige entre pago único o cuota mensual. Siempre sabrás lo que pagas.
+        </p>
+      </div>
+
+      <!-- Toggle -->
+      <div class="flex items-center justify-center gap-4 mb-12 select-none">
+        <span class="text-sm font-bold tracking-wide transition-colors duration-300" id="label-monthly">PAGO MENSUAL</span>
+        <button
+          id="pricing-toggle"
+          class="relative w-14 h-7 bg-white/10 border border-white/20 rounded-full transition-colors hover:border-primary/50"
+          aria-label="Cambiar entre precios mensuales y anuales"
+          aria-pressed="false"
+        >
+          <span id="toggle-dot" class="absolute top-1/2 -translate-y-1/2 left-0 w-6 h-6 bg-gradient-to-br from-primary to-accent rounded-full shadow-lg shadow-primary/30 transition-transform duration-300 ease-out translate-x-0.5"></span>
+        </button>
+        <span class="text-sm font-bold tracking-wide transition-colors duration-300" id="label-annual">PAGO ANUAL <span class="text-secondary text-xs font-bold ml-1 bg-secondary/10 px-2 py-0.5 rounded-full">-20%</span></span>
+      </div>
+
+      <!-- Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-20">
+        {plans.map((plan) => (
+          <div class={`relative rounded-2xl ${plan.recommended ? 'recommended-card md:-mt-4 md:mb-4' : ''}`}>
+            {plan.recommended && (
+              <div class="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                <span class="bg-gradient-to-r from-primary to-secondary text-white text-xs font-bold px-4 py-1.5 rounded-full">
+                  RECOMENDADO
+                </span>
+              </div>
+            )}
+            <div class={`h-full bg-card/80 backdrop-blur-xl border rounded-2xl p-8 flex flex-col ${plan.recommended ? 'border-transparent' : 'border-white/10'}`}>
+              <div class="mb-6">
+                <h3 class="text-lg font-bold text-white mb-1">{plan.name}</h3>
+                <p class="text-text/60 text-sm">{plan.description}</p>
+              </div>
+              
+              <div class="mb-6 min-h-[80px] flex items-end">
+                <div class="price-monthly-block">
+                  <div class="flex items-baseline gap-1">
+                    <span class="price-monthly text-4xl font-bold text-white" data-monthly={plan.monthly}>
+                      {plan.monthly}€
+                    </span>
+                    <span class="text-text/50 text-sm">/mes</span>
+                  </div>
+                  <p class="text-text/40 text-xs mt-1">Pago mensual recurrente</p>
+                </div>
+                <div class="price-annual-block hidden">
+                  <div class="flex items-baseline gap-1">
+                    <span class="price-annual text-4xl font-bold text-white" data-annual={Math.round(plan.monthly * 12 * 0.8)}>
+                      {Math.round(plan.monthly * 12 * 0.8)}€
+                    </span>
+                    <span class="text-text/50 text-sm">/año</span>
+                  </div>
+                  <p class="text-secondary text-xs mt-1 font-medium">Ahorras {Math.round(plan.monthly * 12 * 0.2)}€ al año</p>
+                </div>
+              </div>
+              
+              <ul class="space-y-3 mb-8 flex-grow">
+                {plan.features.map((feature) => (
+                  <li class="flex items-start gap-3 text-sm text-text/80">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                    {feature}
+                  </li>
+                ))}
+                {plan.notIncluded.map((feature) => (
+                  <li class="flex items-start gap-3 text-sm text-text/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              
+              <a 
+                href="/contacto"
+                class={`block text-center py-3 rounded-xl font-medium transition ${plan.recommended ? 'bg-primary text-white hover:bg-primary/90' : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'}`}
+              >
+                Elegir plan
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Comparison Table -->
+      <div class="mb-20">
+        <h2 class="text-2xl md:text-3xl font-bold text-white text-center mb-8">Comparativa de planes</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead>
+              <tr class="border-b border-white/10">
+                <th class="py-4 px-4 text-text/60 font-medium">Característica</th>
+                <th class="py-4 px-4 text-center text-text/60 font-medium">Básico</th>
+                <th class="py-4 px-4 text-center text-text/60 font-medium">Profesional</th>
+                <th class="py-4 px-4 text-center text-text/60 font-medium">Premium</th>
+              </tr>
+            </thead>
+            <tbody>
+              {comparisonFeatures.map((feature) => (
+                <tr class="border-b border-white/5">
+                  <td class="py-4 px-4 text-text/80">{feature.name}</td>
+                  <td class="py-4 px-4 text-center">
+                    {typeof feature.basico === 'boolean' ? (
+                      feature.basico ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-text/20 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      )
+                    ) : (
+                      <span class="text-text/70 text-sm">{feature.basico}</span>
+                    )}
+                  </td>
+                  <td class="py-4 px-4 text-center">
+                    {typeof feature.profesional === 'boolean' ? (
+                      feature.profesional ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-text/20 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      )
+                    ) : (
+                      <span class="text-text/70 text-sm">{feature.profesional}</span>
+                    )}
+                  </td>
+                  <td class="py-4 px-4 text-center">
+                    {typeof feature.premium === 'boolean' ? (
+                      feature.premium ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-text/20 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      )
+                    ) : (
+                      <span class="text-text/70 text-sm">{feature.premium}</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="max-w-3xl mx-auto mb-16">
+        <h2 class="text-2xl md:text-3xl font-bold text-white text-center mb-8">Preguntas frecuentes</h2>
+        <div class="space-y-4">
+          {pricingFaq.map((faq, i) => (
+            <div class="bg-card/80 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
+              <button 
+                class="faq-btn w-full flex items-center justify-between p-6 text-left"
+                aria-expanded="false"
+                aria-controls={`faq-answer-${i}`}
+              >
+                <span class="font-medium text-white pr-4">{faq.question}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-text/50 faq-icon transition-transform shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div 
+                id={`faq-answer-${i}`}
+                class="faq-answer hidden px-6 pb-6 text-text/70 text-sm leading-relaxed"
+              >
+                {faq.answer}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="text-center">
+        <p class="text-text/60 mb-4">¿No sabes qué plan elegir?</p>
+        <a 
+          href="/contacto" 
+          class="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-xl font-medium hover:bg-primary/90 transition"
+        >
+          Escríbenos
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <CookieBanner slot="scripts" />
+  <WhatsAppButton slot="scripts" />
+  <ScrollToTop slot="scripts" />
+</BaseLayout>
+
+<style>
+  .recommended-card::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 18px;
+    background: linear-gradient(45deg, #6C63FF, #FF6584, #43CBFF, #6C63FF);
+    background-size: 300% 300%;
+    animation: gradientBorder 4s ease infinite;
+    z-index: -1;
+  }
+  
+  @keyframes gradientBorder {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .price-monthly-block, .price-annual-block {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .price-monthly-block.hidden, .price-annual-block.hidden {
+    display: none;
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  .price-monthly-block:not(.hidden), .price-annual-block:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
+    animation: priceFadeIn 0.4s ease-out;
+  }
+  @keyframes priceFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<script>
+  // Toggle functionality
+  const toggle = document.getElementById('pricing-toggle');
+  const toggleDot = document.getElementById('toggle-dot');
+  const labelMonthly = document.getElementById('label-monthly');
+  const labelAnnual = document.getElementById('label-annual');
+  let isAnnual = false;
+
+  function updateToggle() {
+    toggle.setAttribute('aria-pressed', isAnnual.toString());
+    if (isAnnual) {
+      toggleDot.classList.remove('translate-x-0.5');
+      toggleDot.classList.add('translate-x-7');
+      labelMonthly.classList.remove('text-white');
+      labelMonthly.classList.add('text-text/70');
+      labelAnnual.classList.add('text-white');
+      labelAnnual.classList.remove('text-text/70');
+    } else {
+      toggleDot.classList.add('translate-x-0.5');
+      toggleDot.classList.remove('translate-x-7');
+      labelMonthly.classList.add('text-white');
+      labelMonthly.classList.remove('text-text/70');
+      labelAnnual.classList.remove('text-white');
+      labelAnnual.classList.add('text-text/70');
+    }
+    document.querySelectorAll('.price-monthly-block').forEach(el => {
+      el.classList.toggle('hidden', isAnnual);
+    });
+    document.querySelectorAll('.price-annual-block').forEach(el => {
+      el.classList.toggle('hidden', !isAnnual);
+    });
+  }
+
+  toggle.addEventListener('click', () => {
+    isAnnual = !isAnnual;
+    updateToggle();
+  });
+
+  updateToggle();
+
+  // FAQ Accordion
+  document.querySelectorAll('.faq-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const answer = btn.nextElementSibling as HTMLElement;
+      const icon = btn.querySelector('.faq-icon');
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      
+      btn.setAttribute('aria-expanded', (!isExpanded).toString());
+      answer?.classList.toggle('hidden');
+      icon?.classList.toggle('rotate-180');
+    });
+  });
+</script>

@@ -1,0 +1,46 @@
+---
+export interface Props {
+  variant?: 'primary' | 'secondary' | 'accent' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  class?: string;
+  type?: 'button' | 'submit' | 'reset';
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  class: className = '',
+  type = 'button',
+} = Astro.props;
+
+const baseClasses = 'inline-flex items-center justify-center font-semibold rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0D0D1A]';
+
+const variantClasses = {
+  primary: 'bg-[#6C63FF] text-white hover:bg-[#6C63FF]/90 focus-visible:ring-[#6C63FF]',
+  secondary: 'bg-[#FF6584] text-white hover:bg-[#FF6584]/90 focus-visible:ring-[#FF6584]',
+  accent: 'bg-[#43CBFF] text-[#0D0D1A] hover:bg-[#43CBFF]/90 focus-visible:ring-[#43CBFF]',
+  outline: 'border-2 border-[#6C63FF] text-[#6C63FF] hover:bg-[#6C63FF]/10 focus-visible:ring-[#6C63FF]',
+};
+
+const sizeClasses = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-6 py-3 text-base',
+  lg: 'px-8 py-4 text-lg',
+};
+
+const classes = [baseClasses, variantClasses[variant], sizeClasses[size], className].join(' ');
+---
+
+{
+  href ? (
+    <a href={href} class={classes} role="button">
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={classes}>
+      <slot />
+    </button>
+  )
+}

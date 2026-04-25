@@ -1,0 +1,62 @@
+<section class="py-6 bg-card border-y border-white/5 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4 text-center">
+    <p class="text-sm font-medium text-text/70 uppercase tracking-wider">Sectores que ya confían en nosotros</p>
+  </div>
+
+  <div class="relative">
+    <div class="flex animate-marquee whitespace-nowrap">
+      <span class="mx-8 text-lg font-heading font-semibold text-white/80 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-primary inline-block"></span> Restaurantes
+      </span>
+      <span class="mx-8 text-lg font-heading font-semibold text-white/80 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-secondary inline-block"></span> Peluquerías
+      </span>
+      <span class="mx-8 text-lg font-heading font-semibold text-white/80 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-accent inline-block"></span> Clínicas
+      </span>
+      <span class="mx-8 text-lg font-heading font-semibold text-white/80 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-primary inline-block"></span> Tiendas Tech
+      </span>
+      <span class="mx-8 text-lg font-heading font-semibold text-white/80 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-secondary inline-block"></span> Gimnasios
+      </span>
+      <span class="mx-8 text-lg font-heading font-semibold text-white/80 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-accent inline-block"></span> Inmobiliarias
+      </span>
+      <!-- Duplicate for seamless loop -->
+      <span class="mx-8 text-lg font-heading font-semibold text-white/80 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-primary inline-block"></span> Restaurantes
+      </span>
+      <span class="mx-8 text-lg font-heading font-semibold text-white/80 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-secondary inline-block"></span> Peluquerías
+      </span>
+      <span class="mx-8 text-lg font-heading font-semibold text-white/80 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-accent inline-block"></span> Clínicas
+      </span>
+      <span class="mx-8 text-lg font-heading font-semibold text-white/80 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-primary inline-block"></span> Tiendas Tech
+      </span>
+      <span class="mx-8 text-lg font-heading font-semibold text-white/80 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-secondary inline-block"></span> Gimnasios
+      </span>
+      <span class="mx-8 text-lg font-heading font-semibold text-white/80 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-accent inline-block"></span> Inmobiliarias
+      </span>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee {
+      animation: none;
+    }
+  }
+</style>

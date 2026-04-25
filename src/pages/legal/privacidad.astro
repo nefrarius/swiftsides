@@ -1,0 +1,100 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Navbar from '@components/layout/Navbar.astro';
+import Footer from '@components/layout/Footer.astro';
+import CookieBanner from '@components/layout/CookieBanner.astro';
+import WhatsAppButton from '@components/layout/WhatsAppButton.astro';
+import ScrollToTop from '@components/layout/ScrollToTop.astro';
+---
+
+<BaseLayout 
+  title="Política de Privacidad | SwiftSides"
+  description="Política de privacidad de SwiftSides. Información sobre el tratamiento de datos personales."
+>
+  <Navbar slot="navbar" />
+  
+  <section class="py-16 md:py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-8">Política de Privacidad</h1>
+      
+      <div class="space-y-10 text-text/80">
+        <div class="bg-card/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+          <h2 class="text-2xl font-semibold text-white mb-4">Responsable del Tratamiento</h2>
+          <p class="leading-relaxed">
+            El responsable del tratamiento de los datos personales recogidos a través de este sitio web es SwiftSides,
+            con domicilio social en Valladolid, España. Puedes contactar con nosotros en la dirección de correo electrónico
+            <a href="mailto:contacto@swiftsides.es" class="text-primary hover:underline">contacto@swiftsides.es</a>.
+          </p>
+        </div>
+
+        <div class="bg-card/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+          <h2 class="text-2xl font-semibold text-white mb-4">Datos Recopilados</h2>
+          <p class="leading-relaxed mb-4">
+            En SwiftSides recopilamos y tratamos los siguientes datos personales:
+          </p>
+          <ul class="list-disc list-inside space-y-2 ml-4">
+            <li>Datos de contacto: nombre, dirección de correo electrónico, número de teléfono.</li>
+            <li>Datos de navegación: dirección IP, tipo de navegador, páginas visitadas, tiempo de permanencia.</li>
+            <li>Datos proporcionados voluntariamente a través de formularios de contacto o solicitudes de presupuesto.</li>
+          </ul>
+        </div>
+
+        <div class="bg-card/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+          <h2 class="text-2xl font-semibold text-white mb-4">Finalidad del Tratamiento</h2>
+          <p class="leading-relaxed mb-4">
+            Los datos personales se recogen con las siguientes finalidades:
+          </p>
+          <ul class="list-disc list-inside space-y-2 ml-4">
+            <li>Gestionar y responder a las solicitudes de información, presupuestos o consultas realizadas.</li>
+            <li>Prestar los servicios contratados y realizar la facturación correspondiente.</li>
+            <li>Enviar comunicaciones comerciales y newsletters, siempre con consentimiento previo.</li>
+            <li>Mejorar la experiencia de usuario y el funcionamiento técnico del sitio web.</li>
+          </ul>
+        </div>
+
+        <div class="bg-card/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+          <h2 class="text-2xl font-semibold text-white mb-4">Legitimación</h2>
+          <p class="leading-relaxed">
+            La base legal para el tratamiento de tus datos es el consentimiento expreso que nos proporcionas al rellenar 
+            nuestros formularios y marcar la casilla de aceptación de la política de privacidad, así como la ejecución 
+            de un contrato cuando los datos son necesarios para la prestación de nuestros servicios.
+          </p>
+        </div>
+
+        <div class="bg-card/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+          <h2 class="text-2xl font-semibold text-white mb-4">Destinatarios</h2>
+          <p class="leading-relaxed">
+            Los datos personales no serán cedidos a terceros, salvo obligación legal. No obstante, algunos datos podrán 
+            ser tratados por encargados del tratamiento (proveedores de hosting, herramientas de email marketing, etc.) 
+            con los que tenemos suscritos los correspondientes contratos de confidencialidad y tratamiento de datos.
+          </p>
+        </div>
+
+        <div class="bg-card/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+          <h2 class="text-2xl font-semibold text-white mb-4">Tus Derechos</h2>
+          <p class="leading-relaxed mb-4">
+            Como titular de los datos, tienes derecho a:
+          </p>
+          <ul class="list-disc list-inside space-y-2 ml-4">
+            <li>Acceder a tus datos personales.</li>
+            <li>Solicitar la rectificación de los datos inexactos.</li>
+            <li>Solicitar la supresión de tus datos cuando ya no sean necesarios.</li>
+            <li>Oponerte al tratamiento o solicitar la limitación del mismo.</li>
+            <li>Solicitar la portabilidad de tus datos.</li>
+            <li>Retirar el consentimiento prestado en cualquier momento.</li>
+          </ul>
+          <p class="leading-relaxed mt-4">
+            Para ejercer estos derechos, envía un correo a 
+            <a href="mailto:hola@localwebs.es" class="text-primary hover:underline">hola@localwebs.es</a> 
+            indicando claramente tu solicitud.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <CookieBanner slot="scripts" />
+  <WhatsAppButton slot="scripts" />
+  <ScrollToTop slot="scripts" />
+</BaseLayout>

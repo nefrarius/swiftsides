@@ -1,0 +1,104 @@
+<section id="como-funciona" class="py-24 bg-dark relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-20">
+      <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4">¿Cómo funciona?</h2>
+      <p class="text-text/70 max-w-xl mx-auto">Cuatro pasos sencillos para tener tu web lista y funcionando.</p>
+    </div>
+
+    <div class="relative">
+      <!-- Progress line background -->
+      <div class="hidden md:block absolute top-20 left-0 right-0 h-1 bg-white/10 rounded-full">
+        <div id="progress-line" class="h-full bg-gradient-to-r from-primary to-accent rounded-full w-0"></div>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-12 relative z-10">
+        <!-- Step 1 -->
+        <div class="step-item text-center">
+          <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center relative bg-dark">
+            <svg class="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span class="absolute -top-2 -right-2 w-6 h-6 bg-primary text-white text-xs font-bold rounded-full flex items-center justify-center">1</span>
+          </div>
+          <h3 class="font-heading text-lg font-bold text-white mb-2">Nos cuentas tu negocio</h3>
+          <p class="text-sm text-text/70">Nos dices qué necesitas y qué objetivos tienes.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-item text-center">
+          <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center relative bg-dark">
+            <svg class="w-7 h-7 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+              <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+            </svg>
+            <span class="absolute -top-2 -right-2 w-6 h-6 bg-secondary text-white text-xs font-bold rounded-full flex items-center justify-center">2</span>
+          </div>
+          <h3 class="font-heading text-lg font-bold text-white mb-2">Diseñamos tu web a medida</h3>
+          <p class="text-sm text-text/70">Creamos un diseño único que refleja tu marca.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-item text-center">
+          <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center relative bg-dark">
+            <svg class="w-7 h-7 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
+              <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
+              <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
+              <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
+            </svg>
+            <span class="absolute -top-2 -right-2 w-6 h-6 bg-accent text-dark text-xs font-bold rounded-full flex items-center justify-center">3</span>
+          </div>
+          <h3 class="font-heading text-lg font-bold text-white mb-2">La lanzamos juntos</h3>
+          <p class="text-sm text-text/70">Revisamos todo y publicamos tu web.</p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-item text-center">
+          <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center relative bg-dark">
+            <svg class="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            <span class="absolute -top-2 -right-2 w-6 h-6 bg-primary text-white text-xs font-bold rounded-full flex items-center justify-center">4</span>
+          </div>
+          <h3 class="font-heading text-lg font-bold text-white mb-2">Tú creces, nosotros la mantenemos</h3>
+          <p class="text-sm text-text/70">Nos encargamos de que esté siempre actualizada.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import gsap from 'gsap';
+  import ScrollTrigger from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!isReducedMotion) {
+    gsap.to('#progress-line', {
+      width: '100%',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#como-funciona',
+        start: 'top 70%',
+        end: 'bottom 50%',
+        scrub: true,
+      }
+    });
+
+    gsap.from('.step-item', {
+      y: 40,
+      opacity: 0,
+      duration: 0.6,
+      stagger: 0.2,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '#como-funciona',
+        start: 'top 75%',
+      }
+    });
+  }
+</script>

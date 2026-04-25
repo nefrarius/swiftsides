@@ -1,0 +1,57 @@
+---
+export interface Props {
+  target: number;
+  suffix?: string;
+  duration?: number;
+}
+
+const { target, suffix = '', duration = 2000 } = Astro.props;
+---
+
+<span class="tabular-nums" data-target={target} data-suffix={suffix} data-duration={duration}>
+  0{suffix}
+</span>
+
+<script>
+  const counters = document.querySelectorAll('[data-target]');
+
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target || '0', 10);
+        const suffix = el.dataset.suffix || '';
+        const duration = parseInt(el.dataset.duration || '2000', 10);
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (prefersReduced) {
+          el.textContent = target.toLocaleString('es-ES') + suffix;
+          observer.unobserve(el);
+          return;
+        }
+
+        const startTime = performance.now();
+        const startValue = 0;
+
+        function update(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const ease = 1 - Math.pow(1 - progress, 4);
+          const current = Math.floor(startValue + (target - startValue) * ease);
+          el.textContent = current.toLocaleString('es-ES') + suffix;
+
+          if (progress < 1) {
+            requestAnimationFrame(update);
+          }
+        }
+
+        requestAnimationFrame(update);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach(function(counter) {
+    observer.observe(counter);
+  });
+</script>

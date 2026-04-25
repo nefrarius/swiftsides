@@ -1,0 +1,77 @@
+---
+import { faqItems } from '@data/faq';
+
+const items = faqItems.slice(0, 6);
+---
+
+<section id="faq" class="py-24 bg-dark">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4">Preguntas frecuentes</h2>
+      <p class="text-text/70">Resolvemos tus dudas antes de empezar.</p>
+    </div>
+
+    <div class="space-y-4">
+      {items.map((item, index) => (
+        <div class="faq-item bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
+          <button
+            class="faq-toggle w-full flex items-center justify-between p-6 text-left"
+            aria-expanded="false"
+            data-index={index}
+          >
+            <span class="font-heading font-semibold text-white pr-4">{item.question}</span>
+            <svg class="faq-icon w-5 h-5 text-primary shrink-0 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out">
+            <div class="overflow-hidden">
+              <div class="px-6 pb-6 text-text/70 leading-relaxed">
+                {item.answer}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function() {
+    const toggles = document.querySelectorAll('.faq-toggle');
+
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const item = toggle.closest('.faq-item');
+        const content = item.querySelector('.faq-content');
+        const icon = toggle.querySelector('.faq-icon');
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+        // Close all others
+        document.querySelectorAll('.faq-item').forEach(other => {
+          if (other === item) return;
+          const otherToggle = other.querySelector('.faq-toggle');
+          const otherContent = other.querySelector('.faq-content');
+          const otherIcon = other.querySelector('.faq-icon');
+          otherToggle.setAttribute('aria-expanded', 'false');
+          otherContent.classList.remove('grid-rows-[1fr]');
+          otherContent.classList.add('grid-rows-[0fr]');
+          otherIcon.classList.remove('rotate-180');
+        });
+
+        // Toggle current
+        toggle.setAttribute('aria-expanded', String(!isOpen));
+        if (isOpen) {
+          content.classList.remove('grid-rows-[1fr]');
+          content.classList.add('grid-rows-[0fr]');
+          icon.classList.remove('rotate-180');
+        } else {
+          content.classList.remove('grid-rows-[0fr]');
+          content.classList.add('grid-rows-[1fr]');
+          icon.classList.add('rotate-180');
+        }
+      });
+    });
+  })();
+</script>

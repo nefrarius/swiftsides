@@ -1,0 +1,162 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/', label: 'Inicio' },
+  { href: '/servicios', label: 'Servicios' },
+  { href: '/portfolio', label: 'Portfolio' },
+  { href: '/pricing', label: 'Precios' },
+  { href: '/nosotros', label: 'Nosotros' },
+  { href: '/contacto', label: 'Contacto' },
+];
+---
+
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-[#43CBFF] focus:text-[#0D0D1A] focus:px-4 focus:py-2 focus:rounded-lg focus:font-semibold focus:shadow-lg">
+  Saltar al contenido principal
+</a>
+
+<header class="sticky top-0 z-50 bg-white/5 backdrop-blur-md border-b border-white/10 transition-shadow duration-300" id="navbar">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3 group" aria-label="SwiftSides Inicio">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="drop-shadow-[0_0_8px_rgba(108,99,255,0.4)]">
+           <rect x="2" y="2" width="36" height="36" rx="8" stroke="#6C63FF" stroke-width="2" class="logo-stroke" />
+           <text x="10" y="26" font-family="Plus Jakarta Sans, sans-serif" font-size="16" font-weight="700" fill="none" stroke="#6C63FF" stroke-width="1.5" class="logo-stroke">SS</text>
+         </svg>
+        <span class="text-xl font-bold text-[#E8E8F0]" style="font-family: 'Plus Jakarta Sans', sans-serif;">SwiftSides</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-8" aria-label="Navegación principal">
+        {navLinks.map((link) => {
+          const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+          return (
+            <a
+              href={link.href}
+              class={`group relative text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#43CBFF] rounded px-1 py-0.5 ${
+                isActive ? 'text-[#43CBFF]' : 'text-[#E8E8F0]/80 hover:text-[#E8E8F0]'
+              }`}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              {link.label}
+              <span class={`absolute left-0 -bottom-1 h-0.5 bg-[#43CBFF] transition-all duration-300 ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+            </a>
+          );
+        })}
+      </nav>
+
+      <!-- CTA -->
+      <div class="hidden md:block">
+        <a
+          href="/contacto"
+          class="inline-flex items-center justify-center px-5 py-2.5 rounded-full text-sm font-semibold bg-[#43CBFF] text-[#0D0D1A] hover:bg-[#43CBFF]/90 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#43CBFF] focus-visible:ring-offset-[#0D0D1A]"
+        >
+          Empezar proyecto
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button
+        id="menu-toggle"
+        class="md:hidden p-2 rounded-lg text-[#E8E8F0] hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#43CBFF]"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="fixed inset-0 z-40 transform translate-x-full transition-transform duration-300 md:hidden" aria-hidden="true">
+    <div class="absolute inset-0 bg-[#0D0D1A]/95 backdrop-blur-xl" id="mobile-backdrop"></div>
+    <div class="absolute right-0 top-0 h-full w-64 bg-[#13132A] border-l border-white/10 p-6 pt-20 shadow-2xl">
+      <button
+        id="menu-close"
+        class="absolute top-6 right-6 p-2 rounded-lg text-[#E8E8F0] hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#43CBFF]"
+        aria-label="Cerrar menú"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <nav class="flex flex-col gap-4" aria-label="Navegación móvil">
+        {navLinks.map((link) => {
+          const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+          return (
+            <a
+              href={link.href}
+              class={`block text-base font-medium py-2 px-3 rounded-lg transition-colors ${
+                isActive ? 'text-[#43CBFF] bg-white/5' : 'text-[#E8E8F0]/80 hover:text-[#E8E8F0] hover:bg-white/5'
+              }`}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          );
+        })}
+        <a
+          href="/contacto"
+          class="mt-4 inline-flex items-center justify-center px-5 py-3 rounded-full text-sm font-semibold bg-[#43CBFF] text-[#0D0D1A] hover:bg-[#43CBFF]/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#43CBFF] focus-visible:ring-offset-[#13132A]"
+        >
+          Empezar proyecto
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<style>
+  .logo-stroke {
+    stroke-dasharray: 500;
+    stroke-dashoffset: 500;
+    animation: strokeDraw 1.5s ease forwards;
+  }
+  @keyframes strokeDraw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .logo-stroke {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+  }
+</style>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuClose = document.getElementById('menu-close');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileBackdrop = document.getElementById('mobile-backdrop');
+
+  function openMenu() {
+    mobileMenu.classList.remove('translate-x-full');
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    menuToggle.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    mobileMenu.classList.add('translate-x-full');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  menuToggle?.addEventListener('click', openMenu);
+  menuClose?.addEventListener('click', closeMenu);
+  mobileBackdrop?.addEventListener('click', closeMenu);
+
+  function handleScroll() {
+    if (window.scrollY > 10) {
+      navbar.classList.add('shadow-lg', 'shadow-black/20');
+    } else {
+      navbar.classList.remove('shadow-lg', 'shadow-black/20');
+    }
+  }
+  window.addEventListener('scroll', handleScroll);
+  handleScroll();
+</script>

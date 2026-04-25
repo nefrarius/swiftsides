@@ -1,0 +1,268 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Navbar from '@components/layout/Navbar.astro';
+import Footer from '@components/layout/Footer.astro';
+import CookieBanner from '@components/layout/CookieBanner.astro';
+import WhatsAppButton from '@components/layout/WhatsAppButton.astro';
+import ScrollToTop from '@components/layout/ScrollToTop.astro';
+import { services, sectors } from '@data/services';
+
+const iconMap: Record<string, string[]> = {
+  'Brush': ['M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01'],
+  'RefreshCw': ['M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15'],
+  'ShoppingCart': ['M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z'],
+  'MapPin': ['M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z', 'M15 11a3 3 0 11-6 0 3 3 0 016 0z'],
+  'Settings': ['M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z', 'M15 12a3 3 0 11-6 0 3 3 0 016 0z'],
+  'Calendar': ['M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'],
+};
+---
+
+<BaseLayout 
+  title="Servicios | SwiftSides"
+  description="Servicios de diseño web para negocios locales. Webs desde cero, rediseño, tiendas online, SEO local, mantenimiento y reservas."
+>
+  <Navbar slot="navbar" />
+  
+  <!-- Hero -->
+  <section class="relative py-20 md:py-32 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+            Todo lo que tu negocio necesita <span class="text-primary">online</span>
+          </h1>
+          <p class="text-lg text-text/70 leading-relaxed mb-8">
+            Desde una web sencilla hasta una tienda online completa. Hosting y dominio incluidos.
+            Diseñamos, desarrollamos y mantenemos tu presencia digital para que puedas centrarte en tu negocio.
+          </p>
+          <a 
+            href="/contacto" 
+            class="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-xl font-medium hover:bg-primary/90 transition"
+          >
+            Solicitar presupuesto
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+        <div class="relative">
+          <svg viewBox="0 0 400 320" class="w-full h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Computer screen -->
+            <rect x="60" y="40" width="280" height="200" rx="12" fill="#13132A" stroke="#6C63FF" stroke-width="2"/>
+            <rect x="80" y="60" width="240" height="140" rx="8" fill="#0D0D1A" stroke="#6C63FF" stroke-width="1" stroke-opacity="0.3"/>
+            <!-- Content on screen -->
+            <circle cx="120" cy="100" r="20" fill="#FF6584" opacity="0.7"/>
+            <rect x="160" y="85" width="140" height="10" rx="5" fill="#6C63FF" opacity="0.4"/>
+            <rect x="160" y="105" width="100" height="10" rx="5" fill="#43CBFF" opacity="0.3"/>
+            <rect x="100" y="140" width="80" height="40" rx="8" fill="#6C63FF" opacity="0.15" stroke="#6C63FF" stroke-width="1"/>
+            <rect x="200" y="140" width="100" height="40" rx="8" fill="#FF6584" opacity="0.15" stroke="#FF6584" stroke-width="1"/>
+            <!-- Stand -->
+            <path d="M170 240 L230 240 L220 280 L180 280 Z" fill="#13132A" stroke="#6C63FF" stroke-width="2"/>
+            <rect x="130" y="280" width="140" height="8" rx="4" fill="#6C63FF" opacity="0.3"/>
+            <!-- Floating elements -->
+            <circle cx="40" cy="80" r="16" fill="#43CBFF" opacity="0.2"/>
+            <circle cx="360" cy="200" r="20" fill="#FF6584" opacity="0.15"/>
+            <rect x="340" y="60" width="24" height="24" rx="6" fill="#6C63FF" opacity="0.2" transform="rotate(15 352 72)"/>
+            <circle cx="50" cy="260" r="12" fill="#FF6584" opacity="0.2"/>
+            <!-- Connection lines -->
+            <path d="M56 80 Q80 60 100 80" stroke="#43CBFF" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.5"/>
+            <path d="M340 200 Q320 220 300 200" stroke="#FF6584" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="py-16 md:py-24 bg-card/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Nuestros Servicios</h2>
+        <p class="text-lg text-text/70 max-w-2xl mx-auto">
+          Soluciones completas para llevar tu negocio al siguiente nivel digital.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {services.map((service) => (
+          <div class="bg-card/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8 group hover:border-primary/30 transition flex flex-col">
+            <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                {(iconMap[service.icon] || ['M12 6v6m0 0v6m0-6h6m-6 0H6']).map((d) => (
+                  <path stroke-linecap="round" stroke-linejoin="round" d={d} />
+                ))}
+              </svg>
+            </div>
+            
+            <h3 class="text-xl font-semibold text-white mb-3">{service.title}</h3>
+            <p class="text-text/60 text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
+              {service.description}
+            </p>
+            
+            <ul class="space-y-2 mb-6">
+              {service.features.slice(0, 4).map((feature) => (
+                <li class="flex items-start gap-2 text-sm text-text/70">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-primary shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+            
+            <a 
+              href="/contacto"
+              class="inline-flex items-center gap-2 text-primary font-medium text-sm hover:gap-3 transition-all"
+            >
+              {service.cta}
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Sectors Tabs -->
+  <section class="py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">¿Para qué tipo de negocio?</h2>
+        <p class="text-lg text-text/70 max-w-2xl mx-auto">
+          Tenemos experiencia en una amplia variedad de sectores. Cada negocio es diferente y nos adaptamos a ti.
+        </p>
+      </div>
+      
+      <!-- Tab Buttons -->
+      <div class="flex flex-wrap justify-center gap-3 mb-12" role="tablist" aria-label="Sectores de negocio">
+        {sectors.map((sector) => (
+          <button
+            class="sector-tab px-6 py-3 rounded-xl text-sm font-medium transition border border-white/10 bg-card/80 text-text/70 hover:border-primary/50 hover:text-white"
+            data-sector={sector.id}
+            role="tab"
+            aria-selected="false"
+            aria-controls={`sector-panel-${sector.id}`}
+          >
+            {sector.name}
+          </button>
+        ))}
+      </div>
+      
+      <!-- Tab Panels -->
+      <div class="relative">
+        {sectors.map((sector) => (
+          <div 
+            id={`sector-panel-${sector.id}`}
+            class="sector-panel hidden"
+            role="tabpanel"
+            aria-labelledby={`tab-${sector.id}`}
+          >
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <!-- Visual Example -->
+              <div class="bg-card/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8 flex items-center justify-center min-h-[300px]">
+                <div class="text-center">
+                  <div class="w-24 h-24 mx-auto mb-6 bg-primary/10 rounded-2xl flex items-center justify-center">
+                    <span class="text-4xl font-bold text-primary/50">{sector.name[0]}</span>
+                  </div>
+                  <h3 class="text-2xl font-bold text-white mb-2">{sector.name}</h3>
+                  <p class="text-text/50 text-sm">Ejemplo: {sector.example}</p>
+                </div>
+              </div>
+              
+              <!-- Benefits -->
+              <div>
+                <h3 class="text-2xl font-bold text-white mb-6">
+                  Webs diseñadas para {sector.name.toLowerCase()}
+                </h3>
+                <ul class="space-y-4">
+                  {sector.benefits.map((benefit) => (
+                    <li class="flex items-start gap-4">
+                      <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p class="text-white font-medium">{benefit}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+                <div class="mt-8">
+                  <a 
+                    href="/contacto"
+                    class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-medium hover:bg-primary/90 transition"
+                  >
+                    Quiero una web para mi {sector.name.toLowerCase()}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <CookieBanner slot="scripts" />
+  <WhatsAppButton slot="scripts" />
+  <ScrollToTop slot="scripts" />
+</BaseLayout>
+
+<script>
+  // Sector tabs
+  const tabs = document.querySelectorAll('.sector-tab');
+  const panels = document.querySelectorAll('.sector-panel');
+  
+  function activateSector(sectorId: string) {
+    tabs.forEach(tab => {
+      const isActive = tab.getAttribute('data-sector') === sectorId;
+      tab.classList.toggle('bg-primary', isActive);
+      tab.classList.toggle('text-white', isActive);
+      tab.classList.toggle('border-primary', isActive);
+      tab.classList.toggle('bg-card/80', !isActive);
+      tab.classList.toggle('text-text/70', !isActive);
+      tab.classList.toggle('border-white/10', !isActive);
+      tab.setAttribute('aria-selected', isActive.toString());
+    });
+    
+    panels.forEach(panel => {
+      panel.classList.add('hidden');
+    });
+    
+    const activePanel = document.getElementById(`sector-panel-${sectorId}`);
+    if (activePanel) {
+      activePanel.classList.remove('hidden');
+      activePanel.classList.add('animate-fade-in');
+    }
+  }
+  
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const sectorId = tab.getAttribute('data-sector');
+      if (sectorId) activateSector(sectorId);
+    });
+  });
+  
+  // Activate first sector by default
+  if (tabs.length > 0) {
+    const firstId = tabs[0].getAttribute('data-sector');
+    if (firstId) activateSector(firstId);
+  }
+</script>
+
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out;
+  }
+</style>

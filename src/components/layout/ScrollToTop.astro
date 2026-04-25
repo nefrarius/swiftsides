@@ -1,0 +1,41 @@
+---
+
+---
+
+<button
+  id="scroll-to-top"
+  class="fixed bottom-24 right-6 z-40 flex items-center justify-center w-12 h-12 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 text-[#E8E8F0] shadow-lg opacity-0 pointer-events-none transition-all duration-300 hover:bg-white/10 hover:text-[#43CBFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#43CBFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0D0D1A]"
+  aria-label="Volver arriba"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<script>
+  const btn = document.getElementById('scroll-to-top');
+
+  function toggleVisibility() {
+    if (!btn) return;
+    if (window.scrollY > 300) {
+      btn.classList.remove('opacity-0', 'pointer-events-none');
+      btn.classList.add('opacity-100', 'pointer-events-auto');
+    } else {
+      btn.classList.add('opacity-0', 'pointer-events-none');
+      btn.classList.remove('opacity-100', 'pointer-events-auto');
+    }
+  }
+
+  btn?.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  window.addEventListener('scroll', toggleVisibility);
+  toggleVisibility();
+</script>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    #scroll-to-top {
+      transition: none;
+    }
+  }
+</style>
