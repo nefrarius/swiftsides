@@ -19,7 +19,7 @@ function jsonResponse(body: unknown, status: number) {
       'X-Frame-Options': 'DENY',
       'Referrer-Policy': 'strict-origin-when-cross-origin',
       // Restrict CORS to same-origin only for API endpoints
-      'Access-Control-Allow-Origin': 'https://swiftsides.es',
+      'Access-Control-Allow-Origin': 'https://swiftsite.es',
       'Access-Control-Allow-Methods': 'POST',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Vary': 'Origin',

@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://swiftsides.es/sitemap.xml
+Sitemap: https://swiftsite.es/sitemap.xml

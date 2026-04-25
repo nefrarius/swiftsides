@@ -14,11 +14,11 @@ export interface PortfolioItem {
 export const portfolioItems: PortfolioItem[] = [
   {
     id: 'swift-sides-primera',
-    title: 'SwiftSides',
+    title: 'SwiftSite',
     sector: 'Agencia Digital',
     category: 'todos',
     technologies: ['Astro', 'Tailwind', 'GSAP'],
-    description: 'Nuestra propia web, el primer proyecto de SwiftSides.',
+    description: 'Nuestra propia web, el primer proyecto de SwiftSite.',
     challenge: 'Comenzar desde cero con una identidad digital propia que transmitiera rapidez y profesionalidad.',
     solution: 'Diseñamos y desarrollamos esta web con Astro y Tailwind, priorizando velocidad, diseño moderno y experiencia de usuario.',
     results: ['Web ultrarrápida', 'Diseño responsive', 'SEO optimizado'],

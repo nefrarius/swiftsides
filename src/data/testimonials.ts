@@ -14,7 +14,7 @@ export const testimonials: Testimonial[] = [
     name: 'Cliente Ejemplo',
     business: 'Bar El Rincón',
     type: 'Restaurante',
-    text: 'SwiftSides nos montó la web en menos de 3 días. Todo muy profesional y el trato inmejorable.',
+    text: 'SwiftSite nos montó la web en menos de 3 días. Todo muy profesional y el trato inmejorable.',
     initials: 'CE',
     rating: 5,
   },

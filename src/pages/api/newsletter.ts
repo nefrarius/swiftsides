@@ -16,7 +16,7 @@ function jsonResponse(body: unknown, status: number) {
       'X-Content-Type-Options': 'nosniff',
       'X-Frame-Options': 'DENY',
       'Referrer-Policy': 'strict-origin-when-cross-origin',
-      'Access-Control-Allow-Origin': 'https://swiftsides.es',
+      'Access-Control-Allow-Origin': 'https://swiftsite.es',
       'Access-Control-Allow-Methods': 'POST',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Vary': 'Origin',
