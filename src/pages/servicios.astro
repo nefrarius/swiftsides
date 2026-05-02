@@ -85,7 +85,7 @@ const iconMap: Record<string, string[]> = {
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.map((service) => (
-          <div class="bg-card/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8 group hover:border-primary/30 transition flex flex-col">
+          <div id={service.id} class="bg-card/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8 group hover:border-primary/30 transition flex flex-col">
             <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 {(iconMap[service.icon] || ['M12 6v6m0 0v6m0-6h6m-6 0H6']).map((d) => (
@@ -139,6 +139,7 @@ const iconMap: Record<string, string[]> = {
       <div class="flex flex-wrap justify-center gap-3 mb-12" role="tablist" aria-label="Sectores de negocio">
         {sectors.map((sector) => (
           <button
+            id={`tab-${sector.id}`}
             class="sector-tab px-6 py-3 rounded-xl text-sm font-medium transition border border-white/10 bg-card/80 text-text/70 hover:border-primary/50 hover:text-white"
             data-sector={sector.id}
             role="tab"

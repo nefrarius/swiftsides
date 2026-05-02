@@ -1,6 +1,7 @@
 ---
 import { faqItems } from '@data/faq';
 
+const nonce = Astro.locals.nonce || '';
 const items = faqItems.slice(0, 6);
 ---
 
@@ -37,7 +38,7 @@ const items = faqItems.slice(0, 6);
   </div>
 </section>
 
-<script is:inline>
+<script is:inline nonce={nonce}>
   (function() {
     const toggles = document.querySelectorAll('.faq-toggle');
 

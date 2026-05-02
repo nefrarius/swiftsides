@@ -30,6 +30,8 @@ const siteUrl = 'https://swiftsite.es';
     <!-- Preconnect to Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" /></noscript>
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -63,13 +65,6 @@ const siteUrl = 'https://swiftsite.es';
     <slot name="head" />
   </head>
   <body class="bg-dark text-text min-h-screen flex flex-col">
-    <a 
-      href="#main-content" 
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg"
-    >
-      Saltar al contenido principal
-    </a>
-    
     <slot name="navbar" />
     
     <main id="main-content" class="flex-grow">

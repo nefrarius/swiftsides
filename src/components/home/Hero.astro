@@ -1,3 +1,7 @@
+---
+const nonce = Astro.locals.nonce || '';
+---
+
 <section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark">
   <canvas id="hero-canvas" class="absolute inset-0 w-full h-full opacity-60"></canvas>
 
@@ -47,7 +51,7 @@
   </div>
 </section>
 
-<script is:inline>
+<script is:inline nonce={nonce}>
   (function() {
     const canvas = document.getElementById('hero-canvas');
     const ctx = canvas.getContext('2d');

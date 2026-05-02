@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import nodemailer from 'nodemailer';
 import { sanitizeInput } from '../../utils/sanitize';
 import { validateContactForm, containsSqlInjection } from '../../utils/validation';
 import { checkRateLimit } from '../../utils/rateLimit';
@@ -172,24 +173,16 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     // Reject if score is below 0.5 (high bot probability).
     // ============================================================
     const recaptchaToken = formData.get('recaptcha_token');
-    if (!recaptchaToken) {
-      return jsonResponse(
-        { success: false, message: 'Verificación de seguridad requerida.' },
-        400
-      );
-    }
-
     const secretKey = import.meta.env.RECAPTCHA_SECRET_KEY || '';
-    if (!secretKey) {
-      // In production, a missing secret is a configuration error.
-      if (import.meta.env.PROD) {
+
+    if (secretKey) {
+      if (!recaptchaToken) {
         return jsonResponse(
-          { success: false, message: 'Configuración de seguridad incompleta.' },
-          500
+          { success: false, message: 'Verificación de seguridad requerida.' },
+          400
         );
       }
-      // In development, allow the request to proceed without reCAPTCHA.
-    } else {
+
       const verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
       const verifyBody = new URLSearchParams();
       verifyBody.append('secret', secretKey);
@@ -209,13 +202,81 @@ export const POST: APIRoute = async ({ request, cookies }) => {
           400
         );
       }
+    } else if (import.meta.env.PROD) {
+      // In production, a missing secret is a configuration error.
+      return jsonResponse(
+        { success: false, message: 'Configuración de seguridad incompleta.' },
+        500
+      );
     }
 
     // ============================================================
-    // Security step j) All checks passed. Return generic success.
-    // Do NOT echo user input back in the response.
+    // Send email via SMTP (Resend)
     // ============================================================
-    // TODO: integrate email provider (Resend, SendGrid, etc.)
+    const smtpHost = import.meta.env.SMTP_HOST || 'smtp.resend.com';
+    const smtpPort = Number(import.meta.env.SMTP_PORT || 587);
+    const smtpUser = import.meta.env.SMTP_USER || 'resend';
+    const smtpPass = import.meta.env.SMTP_PASS || '';
+    const contactEmailTo = import.meta.env.CONTACT_EMAIL_TO || '';
+
+    if (!smtpPass || !contactEmailTo) {
+      return jsonResponse(
+        { success: false, message: 'Configuración de email incompleta.' },
+        500
+      );
+    }
+
+    const transporter = nodemailer.createTransport({
+      host: smtpHost,
+      port: smtpPort,
+      secure: smtpPort === 465,
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    });
+
+    const subject = `Nuevo mensaje de contacto de ${nombre}`;
+    const textBody = `Has recibido un nuevo mensaje desde el formulario de contacto:
+
+Nombre: ${nombre}
+Email: ${email}
+Teléfono: ${telefono || 'No proporcionado'}
+Tipo de negocio: ${tipoNegocio || 'No especificado'}
+Plan de interés: ${planInteres || 'No especificado'}
+Mensaje:
+${mensaje}
+`;
+
+    const htmlBody = `
+      <h2>Nuevo mensaje de contacto</h2>
+      <p><strong>Nombre:</strong> ${nombre}</p>
+      <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+      <p><strong>Teléfono:</strong> ${telefono || 'No proporcionado'}</p>
+      <p><strong>Tipo de negocio:</strong> ${tipoNegocio || 'No especificado'}</p>
+      <p><strong>Plan de interés:</strong> ${planInteres || 'No especificado'}</p>
+      <hr/>
+      <p><strong>Mensaje:</strong></p>
+      <p style="white-space:pre-line">${mensaje}</p>
+    `;
+
+    try {
+      await transporter.sendMail({
+        from: `"SwiftSite Contacto" <${contactEmailTo}>`,
+        to: contactEmailTo,
+        replyTo: email,
+        subject,
+        text: textBody,
+        html: htmlBody,
+      });
+    } catch (mailErr) {
+      console.error('Error sending email:', mailErr);
+      return jsonResponse(
+        { success: false, message: 'No se pudo enviar el mensaje. Inténtalo más tarde.' },
+        500
+      );
+    }
+
     return jsonResponse({ success: true }, 200);
   } catch (err) {
     // Log securely without leaking stack traces to the client.
