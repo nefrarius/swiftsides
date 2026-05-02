@@ -1,4 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="8" fill="#0D0D1A" stroke="#6C63FF" stroke-width="2"/>
-  <text x="8" y="22" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="700" fill="#6C63FF">SS</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="8" fill="#0F0F0F"/>
+  <rect x="4" y="2" width="24" height="24" rx="5" fill="#1a1a2e"/>
+  <path d="M10 9 Q14 7 16 9" fill="none" stroke="#00E5FF" stroke-width="1" stroke-linecap="round"/>
+  <path d="M16 9 Q18 7 22 9" fill="none" stroke="#00E5FF" stroke-width="1" stroke-linecap="round"/>
+  <circle cx="13" cy="13" r="2.5" fill="#00E5FF"/>
+  <circle cx="14" cy="12" r="1" fill="#fff" opacity="0.6"/>
+  <path d="M18 13 Q20 11 21 13" fill="none" stroke="#00E5FF" stroke-width="1" stroke-linecap="round"/>
+  <line x1="18" y1="13" x2="21" y2="13" stroke="#00E5FF" stroke-width="1" stroke-linecap="round"/>
+  <path d="M12 19 Q15 21 20 18" fill="none" stroke="#00E5FF" stroke-width="1" stroke-linecap="round"/>
+  <rect x="10" y="14" width="3" height="6" rx="1.5" fill="#0F0F0F"/>
+  <rect x="19" y="14" width="3" height="6" rx="1.5" fill="#0F0F0F"/>
 </svg>
